@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MyNotes extends StatefulWidget {
-  const MyNotes({super.key});
+  final Function(int) updatePage;
+  final Function addNote;
+
+  const MyNotes({super.key, required this.addNote, required this.updatePage});
 
   @override
   State<MyNotes> createState() => _MyNotesState();
@@ -12,13 +15,24 @@ class _MyNotesState extends State<MyNotes> {
   final _topic = TextEditingController();
   final _content = TextEditingController();
 
+  @override
+  void dispose() {
+    _topic.dispose();
+    _content.dispose();
+    super.dispose();
+  }
+
   saveInfo() {
     if (_formKey.currentState!.validate()) {
       var data = {
         'topic': _topic.text,
-        'content':_content.text,
+        'content': _content.text,
       };
-      
+      widget.addNote(data); //adds the notes to list
+      _topic.clear();
+      _content.clear();
+      setState(() {});
+      widget.updatePage(0);
     }
   }
 

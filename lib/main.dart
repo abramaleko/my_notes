@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'my_notes.dart';
+import 'notes_list.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
 }
 
 class NavigationContainer extends StatefulWidget {
-  const NavigationContainer({super.key});
+  const NavigationContainer({Key? key}) : super(key: key);
 
   @override
   State<NavigationContainer> createState() => _NavigationContainerState();
@@ -25,6 +26,19 @@ class NavigationContainer extends StatefulWidget {
 
 class _NavigationContainerState extends State<NavigationContainer> {
   int currentIndex = 0; //stores the index of the home page
+  List<Map> notes = [];
+
+  void updatePage(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  void addNote(note) {
+    setState(() {
+      notes.add(note);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +46,10 @@ class _NavigationContainerState extends State<NavigationContainer> {
 
     switch (currentIndex) {
       case 0:
-        page = const Text('My Notes');
+        page = NotesList(notes: notes);
         break;
       case 1:
-       page = const MyNotes();
+        page = MyNotes(addNote: addNote, updatePage: updatePage);
         break;
       case 2:
         page = const Text('Saved Notes');
