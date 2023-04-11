@@ -46,7 +46,7 @@ class _NavigationContainerState extends State<NavigationContainer> {
 
     switch (currentIndex) {
       case 0:
-        page = NotesList(notes: notes);
+        page = NotesList(notes: notes,updatePage:updatePage);
         break;
       case 1:
         page = MyNotes(addNote: addNote, updatePage: updatePage);
