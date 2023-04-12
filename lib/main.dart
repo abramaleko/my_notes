@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'my_notes.dart';
 import 'notes_list.dart';
+import 'note.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,16 +28,39 @@ class NavigationContainer extends StatefulWidget {
 class _NavigationContainerState extends State<NavigationContainer> {
   int currentIndex = 0; //stores the index of the home page
   List<Map> notes = [];
+  Map note = {};
 
+//updates page depending on index
   void updatePage(int index) {
     setState(() {
       currentIndex = index;
     });
   }
 
+  void showNote(Map note, index) {
+    setState(() {
+      this.note = note;
+      showNotePage();
+    });
+  }
+
+  void showNotePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => Note(note: note, deleteNote: deleteNote)),
+    );
+  }
+
   void addNote(note) {
     setState(() {
       notes.add(note);
+    });
+  }
+
+  void deleteNote(int id) {
+    setState(() {
+      notes.removeWhere((note) => note['id'] == id);
     });
   }
 
@@ -46,7 +70,8 @@ class _NavigationContainerState extends State<NavigationContainer> {
 
     switch (currentIndex) {
       case 0:
-        page = NotesList(notes: notes,updatePage:updatePage);
+        page =
+            NotesList(notes: notes, updatePage: updatePage, showNote: showNote,deleteNote: deleteNote);
         break;
       case 1:
         page = MyNotes(addNote: addNote, updatePage: updatePage);

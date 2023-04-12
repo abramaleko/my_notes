@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class MyNotes extends StatefulWidget {
@@ -24,7 +26,9 @@ class _MyNotesState extends State<MyNotes> {
 
   saveInfo() {
     if (_formKey.currentState!.validate()) {
+      var id=Random().nextInt(100);
       var data = {
+         'id' : id,
         'topic': _topic.text,
         'content': _content.text,
       };
