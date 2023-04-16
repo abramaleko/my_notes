@@ -42,55 +42,37 @@ class _NotesListState extends State<NotesList> {
               itemCount: widget.notes.length,
               itemBuilder: (BuildContext context, int index) {
                 final note = widget.notes[index];
-                return Column(
-                  children: [
-                    Slidable(
-                      key: const ValueKey(0),
-                      startActionPane: ActionPane(
-                        motion: const ScrollMotion(),
-                        children: [
-                          // A SlidableAction can have an icon and/or a label.
-                          SlidableAction(
-                            onPressed: (BuildContext context) {
-                              widget.deleteNote(note['id']);
-                            },
-                            backgroundColor: const Color(0xFFFE4A49),
-                            foregroundColor: Colors.white,
-                            icon: Icons.delete,
-                            label: 'Delete',
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: ListTile(
-                          title: Text(
-                            note['topic'],
-                            style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.normal,
-                                color: Color.fromARGB(255, 31, 30, 30)),
-                          ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              note['content'],
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                          onTap: () {
-                            widget.showNote(note, 3);
-                          },
+                return Padding(
+                  padding: const EdgeInsets.only(top: 5, bottom: 5,left: 10,right: 10),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListTile(
+                        title: Text(
+                          note['topic'],
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 41, 40, 40)),
                         ),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            note['content'],
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        onTap: () {
+                          widget.showNote(note, 3);
+                        },
                       ),
                     ),
-                    const Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                      height: 15,
-                    ),
-                  ],
+                  ),
                 );
               },
             );
