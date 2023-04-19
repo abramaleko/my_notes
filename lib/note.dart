@@ -22,40 +22,50 @@ class _NoteState extends State<Note> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: SingleChildScrollView(
+            child:  Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 children: [
-                  Text(
-                    widget.note['topic'],
-                    style: const TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.note['topic'],
+                        style: const TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            widget.deleteNote(widget.note['id']);
+                            setState(() {});
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ))
+                    ],
                   ),
-                  IconButton(
-                      onPressed: () {
-                        widget.deleteNote(widget.note['id']);
-                        setState(() { });
-                      },
-                      icon: const Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      ))
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      widget.note['content'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey.shade700,
+                        height: 1.5,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                  widget.note['content'],
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade700,
-                    height: 1.5,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              )
-            ],
+            ),
+          ),
           ),
         ),
       ),
