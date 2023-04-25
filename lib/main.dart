@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_notes/note_provide.dart';
+import 'package:provider/provider.dart';
 import 'my_notes.dart';
 import 'notes_list.dart';
-import 'note.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,8 +13,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: NavigationContainer(),
+    return MaterialApp(
+      home: ChangeNotifierProvider<NoteProvider>(
+          create: (context) => NoteProvider(),
+          child: const NavigationContainer()),
     );
   }
 }
@@ -26,71 +29,32 @@ class NavigationContainer extends StatefulWidget {
 }
 
 class _NavigationContainerState extends State<NavigationContainer> {
-  int currentIndex = 0; //stores the index of the home page
-  List<Map> notes = [];
-  Map note = {};
-
-//updates page depending on index
-  void updatePage(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-  }
-
-  void showNote(Map note, index) {
-    setState(() {
-      this.note = note;
-      showNotePage();
-    });
-  }
-
-  void showNotePage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => Note(note: note, deleteNote: deleteNote)),
-    );
-  }
-
-  void addNote(note) {
-    setState(() {
-      notes.add(note);
-    });
-  }
-
-  void deleteNote(int id) {
-    setState(() {
-      notes.removeWhere((note) => note['id'] == id);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final noteProvider = Provider.of<NoteProvider>(context);
     Widget page;
 
-    switch (currentIndex) {
+    switch (noteProvider.currentIndex) {
       case 0:
-        page =
-            NotesList(notes: notes, updatePage: updatePage, showNote: showNote,deleteNote: deleteNote);
+        //tocheck
+        page = const NotesList();
         break;
       case 1:
-        page = MyNotes(addNote: addNote, updatePage: updatePage);
+        page = const MyNotes();
         break;
       case 2:
         page = const Text('Saved Notes');
         break;
       default:
-        throw UnimplementedError('no widget for $currentIndex');
+        throw UnimplementedError('no widget for ${noteProvider.currentIndex}');
     }
 
     return Scaffold(
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
-          setState(() {
-            currentIndex = index;
-          });
+          noteProvider.updatePage(index);
         },
-        selectedIndex: currentIndex,
+        selectedIndex: noteProvider.currentIndex,
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.explore),
