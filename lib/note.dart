@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:my_notes/note_provide.dart';
+import 'package:provider/provider.dart';
 
-class Note extends StatefulWidget {
+class Note extends StatelessWidget {
   final Map note;
-  final Function(int) deleteNote;
 
-  const Note({super.key, required this.note, required this.deleteNote});
-
-  @override
-  State<Note> createState() => _NoteState();
-}
-
-class _NoteState extends State<Note> {
+  const Note({super.key, required this.note});
+  
   @override
   Widget build(BuildContext context) {
+   final noteProvider = Provider.of<NoteProvider>(context,listen: false);
+
     // ignore: avoid_unnecessary_containers
     return MaterialApp(
       title: 'My App',
@@ -35,14 +33,13 @@ class _NoteState extends State<Note> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.note['topic'],
+                        note['topic'],
                         style: const TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                       IconButton(
                           onPressed: () {
-                            widget.deleteNote(widget.note['id']);
-                            setState(() {});
+                            noteProvider.deleteNote(note['id']);
                           },
                           icon: const Icon(
                             Icons.delete,
@@ -53,7 +50,7 @@ class _NoteState extends State<Note> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Text(
-                      widget.note['content'],
+                      note['content'],
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Colors.grey.shade700,

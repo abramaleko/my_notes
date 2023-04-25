@@ -1,26 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:my_notes/note_provide.dart';
+import 'package:provider/provider.dart';
 
-class NotesList extends StatefulWidget {
-  final List<Map> notes;
-  final Function(int) updatePage;
-  final Function(int) deleteNote;
-  final Function showNote;
+class NotesList extends StatelessWidget {
+  const NotesList({super.key});
 
-  const NotesList(
-      {super.key,
-      required this.notes,
-      required this.updatePage,
-      required this.showNote,
-      required this.deleteNote});
-
-  @override
-  State<NotesList> createState() => _NotesListState();
-}
-
-class _NotesListState extends State<NotesList> {
   @override
   Widget build(BuildContext context) {
+    final noteProvider = Provider.of<NoteProvider>(context);
+    var notes = noteProvider.notes;
+
     return MaterialApp(
       title: 'My notes',
       home: Scaffold(
@@ -28,7 +17,7 @@ class _NotesListState extends State<NotesList> {
           title: const Text('Note Lists'),
         ),
         body: Builder(builder: (BuildContext context) {
-          if (widget.notes.isEmpty) {
+          if (notes.isEmpty) {
             return const Center(
               child: Text(
                 'No notes found ',
@@ -39,11 +28,12 @@ class _NotesListState extends State<NotesList> {
             );
           } else {
             return ListView.builder(
-              itemCount: widget.notes.length,
+              itemCount: notes.length,
               itemBuilder: (BuildContext context, int index) {
-                final note = widget.notes[index];
+                final note = notes[index];
                 return Padding(
-                  padding: const EdgeInsets.only(top: 5, bottom: 5,left: 10,right: 10),
+                  padding: const EdgeInsets.only(
+                      top: 5, bottom: 5, left: 10, right: 10),
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.0),
@@ -68,7 +58,7 @@ class _NotesListState extends State<NotesList> {
                           ),
                         ),
                         onTap: () {
-                          widget.showNote(note, 3);
+                          noteProvider.showNotePage(context,note);
                         },
                       ),
                     ),
@@ -80,8 +70,7 @@ class _NotesListState extends State<NotesList> {
         }),
         floatingActionButton: FloatingActionButton(
             onPressed: () {
-              widget.updatePage(1);
-              setState(() {}); //updates the ui
+              noteProvider.updatePage(1);
             },
             child: const Icon(Icons.add)),
       ),
