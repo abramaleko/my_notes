@@ -18,8 +18,9 @@ final _router = GoRouter(
       builder: (context, state) => const MyNotes(),
     ),
     GoRoute(
-      path: '/note',
-      builder: (context, state) =>  Note(),
+      path: '/note/:noteId',
+      name: 'note',
+      builder: (context, state) =>  Note(noteId:state.params['noteId']),
       ),
   ],
 );
