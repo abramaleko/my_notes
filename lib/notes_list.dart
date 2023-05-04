@@ -59,7 +59,8 @@ class NotesList extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          router.goNamed('note', params: {'noteId': note['id'].toString()});
+                          router.goNamed('note',
+                              params: {'noteId': note['id'].toString()});
                         },
                       ),
                     ),
@@ -70,6 +71,7 @@ class NotesList extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             noteProvider.updatePage(1);
+            context.go('/create-note');
           },
           child: const Icon(Icons.add)),
     );
