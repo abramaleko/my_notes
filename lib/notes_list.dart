@@ -12,8 +12,7 @@ class NotesList extends StatelessWidget {
   Widget build(BuildContext context) {
     final noteProvider = Provider.of<NoteProvider>(context);
     var notes = noteProvider.notes;
-      final router = GoRouter.of(context);
-
+    final router = GoRouter.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -60,10 +59,7 @@ class NotesList extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          noteProvider.showNotePage(note);
-                          // Get the GoRouter instance from the current context
-                          // Navigate to the '/note' route
-                          router.go('/note');
+                          router.goNamed('note', params: {'noteId': note['id'].toString()});
                         },
                       ),
                     ),

@@ -4,15 +4,15 @@ import 'package:my_notes/note_provide.dart';
 import 'package:provider/provider.dart';
 
 class Note extends StatelessWidget {
-  Map note = {};
+  var noteId;
 
-  Note({super.key});
-
+  Note({super.key, required this.noteId});
   @override
   Widget build(BuildContext context) {
     final noteProvider = Provider.of<NoteProvider>(context, listen: false);
-    note = noteProvider.note;
-    // ignore: avoid_unnecessary_containers
+    var note = noteProvider.notes
+        .firstWhere((note) => note['id'] == int.parse(noteId));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My note'),
