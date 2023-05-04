@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_notes/note_provide.dart';
 import 'package:provider/provider.dart';
+import './navigation_container.dart';
+import 'dart:core';
 
 class NotesList extends StatelessWidget {
   const NotesList({super.key});
@@ -9,25 +12,24 @@ class NotesList extends StatelessWidget {
   Widget build(BuildContext context) {
     final noteProvider = Provider.of<NoteProvider>(context);
     var notes = noteProvider.notes;
+      final router = GoRouter.of(context);
 
-    return MaterialApp(
-      title: 'My notes',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Note Lists'),
-        ),
-        body: Builder(builder: (BuildContext context) {
-          if (notes.isEmpty) {
-            return const Center(
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Note Lists'),
+      ),
+      bottomNavigationBar: const NavigationContainer(),
+      body: notes.isEmpty
+          ? const Center(
               child: Text(
                 'No notes found ',
                 style: TextStyle(
                   fontSize: 18,
                 ),
               ),
-            );
-          } else {
-            return ListView.builder(
+            )
+          : ListView.builder(
               itemCount: notes.length,
               itemBuilder: (BuildContext context, int index) {
                 final note = notes[index];
@@ -58,22 +60,22 @@ class NotesList extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          noteProvider.showNotePage(context,note);
+                          noteProvider.showNotePage(note);
+                          // Get the GoRouter instance from the current context
+                          // Navigate to the '/note' route
+                          router.go('/note');
                         },
                       ),
                     ),
                   ),
                 );
               },
-            );
-          }
-        }),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              noteProvider.updatePage(1);
-            },
-            child: const Icon(Icons.add)),
-      ),
+            ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            noteProvider.updatePage(1);
+          },
+          child: const Icon(Icons.add)),
     );
   }
 }

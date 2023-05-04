@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_notes/note_provide.dart';
 import 'package:provider/provider.dart';
 
 class Note extends StatelessWidget {
-  final Map note;
+  Map note = {};
 
-  const Note({super.key, required this.note});
-  
+  Note({super.key});
+
   @override
   Widget build(BuildContext context) {
-   final noteProvider = Provider.of<NoteProvider>(context,listen: false);
-
+    final noteProvider = Provider.of<NoteProvider>(context, listen: false);
+    note = noteProvider.note;
     // ignore: avoid_unnecessary_containers
-    return MaterialApp(
-      title: 'My App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('My note'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
-            child:  Card(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My note'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: SingleChildScrollView(
+          child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
@@ -40,6 +39,7 @@ class Note extends StatelessWidget {
                       IconButton(
                           onPressed: () {
                             noteProvider.deleteNote(note['id']);
+                            context.go('/');
                           },
                           icon: const Icon(
                             Icons.delete,
@@ -62,7 +62,6 @@ class Note extends StatelessWidget {
                 ],
               ),
             ),
-          ),
           ),
         ),
       ),

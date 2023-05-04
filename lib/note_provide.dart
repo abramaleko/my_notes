@@ -15,18 +15,15 @@ class NoteProvider with ChangeNotifier {
   void addNote(note) {
     notes.add(note); //add note to the list
     updatePage(0); //shows the note list page
+  }
+
+  void showNotePage(note) {
+    this.note = note;
     notifyListeners();
   }
 
-  void showNotePage(BuildContext context,note) {
-    Navigator.push(context,MaterialPageRoute(
-          builder: (context) => Note(note: note)),
-    );
-  }
-
   void deleteNote(int id) {
-      notes.removeWhere((note) => note['id'] == id);
-      updatePage(0); //shows the note list page
-      notifyListeners();
+    notes.removeWhere((note) => note['id'] == id);
+    notifyListeners();
   }
 }
