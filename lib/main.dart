@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_notes/note.dart';
-import 'package:my_notes/note_provide.dart';
+import 'package:my_notes/screens/note.dart';
+import 'package:my_notes/provider/note_provide.dart';
 import 'package:provider/provider.dart';
-import 'my_notes.dart';
-import 'notes_list.dart';
+import 'screens/my_notes.dart';
+import 'screens/notes_list.dart';
 import 'package:go_router/go_router.dart';
 
 // GoRouter configuration
