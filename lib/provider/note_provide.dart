@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'note.dart';
+import '../screens/note.dart';
 
 class NoteProvider with ChangeNotifier {
   int currentIndex = 0; //stores the index of the home page

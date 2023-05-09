@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:go_router/go_router.dart';
-import 'package:my_notes/note_provide.dart';
+import 'package:my_notes/provider/note_provide.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import './navigation_container.dart';
+import '../util/navigation_container.dart';
 
 class MyNotes extends StatelessWidget {
   const MyNotes({super.key});
