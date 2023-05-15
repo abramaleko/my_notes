@@ -8,6 +8,7 @@ class NavigationContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final noteProvider = Provider.of<NoteProvider>(context);
 
     void onTapMenu(int value) {
@@ -16,7 +17,7 @@ class NavigationContainer extends StatelessWidget {
       
       switch (noteProvider.currentIndex) {
         case 0:
-          context.go('/');
+          context.go('/note-list');
           break;
         case 1:
           context.go('/create-note');
