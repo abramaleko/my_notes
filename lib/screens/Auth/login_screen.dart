@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_notes/services/firebase_auth_methods.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,7 +17,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
-      // Login logic goes here
+      // Login logic goes he
+      FirebaseAuthMethods(FirebaseAuth.instance).emailLogIn(
+          email: _emailController.text,
+          password: _passwordController.text,
+          context: context
+          );
     }
   }
 
