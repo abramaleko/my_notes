@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_notes/firebase_options.dart';
@@ -24,24 +25,46 @@ final _router = GoRouter(
     GoRoute(
       path: '/note-list',
       builder: (context, state) => const NotesList(),
+      redirect: (context, state) {
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          return null;
+        } else {
+          return '/';
+        }
+      },
     ),
     GoRoute(
       path: '/create-note',
       builder: (context, state) => const MyNotes(),
+      redirect: (context, state) {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        return null;
+      } else {
+        return '/';
+      }
+    },
     ),
     GoRoute(
       path: '/note/:noteId',
       name: 'note',
       builder: (context, state) => Note(noteId: state.params['noteId']),
+      redirect: (context, state) {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        return null;
+      } else {
+        return '/';
+      }
+    },
     ),
   ],
 );
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-     );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<NoteProvider>(create: (context) => NoteProvider()),
   ], child: const MyApp()));
