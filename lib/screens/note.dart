@@ -39,7 +39,7 @@ class Note extends StatelessWidget {
                       IconButton(
                           onPressed: () {
                             noteProvider.deleteNote(note['id']);
-                            context.go('/');
+                            context.go('/note-list');
                           },
                           icon: const Icon(
                             Icons.delete,

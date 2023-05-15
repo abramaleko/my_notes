@@ -28,7 +28,7 @@ class MyNotes extends StatelessWidget {
         topic.clear();
         content.clear();
         noteProvider.addNote(data); //add note to the list
-        context.go('/');
+        context.go('/note-list');
       }
     }
 
