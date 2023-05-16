@@ -1,4 +1,4 @@
-import 'package:my_notes/provider/note_provide.dart';
+import 'package:notes/provider/note_provide.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';

@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_notes/firebase_options.dart';
-import 'package:my_notes/screens/Auth/login_screen.dart';
-import 'package:my_notes/screens/Auth/sign_up.dart';
-import 'package:my_notes/screens/note.dart';
-import 'package:my_notes/provider/note_provide.dart';
+import 'firebase_options.dart';
+import 'screens/Auth/login_screen.dart';
+import 'screens/Auth/sign_up.dart';
+import 'screens/note.dart';
+import 'provider/note_provide.dart';
 import 'package:provider/provider.dart';
 import 'screens/my_notes.dart';
 import 'screens/notes_list.dart';
