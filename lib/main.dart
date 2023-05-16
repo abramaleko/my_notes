@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/screens/profile.dart';
 import 'firebase_options.dart';
 import 'screens/Auth/login_screen.dart';
 import 'screens/Auth/sign_up.dart';
@@ -15,9 +16,14 @@ import 'package:go_router/go_router.dart';
 final _router = GoRouter(
   routes: [
     GoRoute(
-      path: '/',
-      builder: (context, state) => const LoginScreen(),
-    ),
+        path: '/',
+        builder: (context, state) => const LoginScreen(),
+        redirect: (context, state) {
+          final user = FirebaseAuth.instance.currentUser;
+          if (user != null) {
+            return '/note-list';
+          }
+        }),
     GoRoute(
       path: '/sign-up',
       builder: (context, state) => const SignUp(),
@@ -38,27 +44,39 @@ final _router = GoRouter(
       path: '/create-note',
       builder: (context, state) => const MyNotes(),
       redirect: (context, state) {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        return null;
-      } else {
-        return '/';
-      }
-    },
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          return null;
+        } else {
+          return '/';
+        }
+      },
     ),
     GoRoute(
       path: '/note/:noteId',
       name: 'note',
       builder: (context, state) => Note(noteId: state.params['noteId']),
       redirect: (context, state) {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        return null;
-      } else {
-        return '/';
-      }
-    },
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          return null;
+        } else {
+          return '/';
+        }
+      },
     ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) =>  Profile(),
+      redirect: (context, state) {
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          return null;
+        } else {
+          return '/';
+        }
+      },
+    )
   ],
 );
 

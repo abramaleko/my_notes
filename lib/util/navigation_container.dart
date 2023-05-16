@@ -22,6 +22,9 @@ class NavigationContainer extends StatelessWidget {
         case 1:
           context.go('/create-note');
           break;
+           case 2:
+          context.go('/profile');
+          break;
         default:
       }
     }
@@ -31,6 +34,8 @@ class NavigationContainer extends StatelessWidget {
         BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Notes'),
         BottomNavigationBarItem(
             icon: Icon(Icons.add_chart_outlined), label: 'New note'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle), label: 'Profile'),
       ],
       currentIndex: noteProvider.currentIndex,
       selectedItemColor: const Color.fromARGB(255, 15, 183, 195),
