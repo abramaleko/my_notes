@@ -27,7 +27,7 @@ class FirebaseAuthMethods {
     try {
       _auth.currentUser!.sendEmailVerification();
       showSnackBar(context, 'Email Verification Sent');
-       context.go('/');
+      context.go('/');
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }
@@ -42,9 +42,20 @@ class FirebaseAuthMethods {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       if (!_auth.currentUser!.emailVerified) {
         showSnackBar(context, 'Check your email to verify your account');
-      }else{
+      } else {
         context.go('/note-list');
       }
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
+
+  Future<void> logOff({
+    required BuildContext context,
+  }) async {
+    try {
+      await _auth.signOut();
+      context.go('/');
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }

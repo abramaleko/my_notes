@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/services/firebase_auth_methods.dart';
 import 'package:notes/util/navigation_container.dart';
 
 class Profile extends StatelessWidget {
   Profile({Key? key}) : super(key: key);
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // ignore: prefer_typing_uninitialized_variables
-  var name, email, photoUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +15,9 @@ class Profile extends StatelessWidget {
       // Access the user information
       email = currentUser.email;
     }
+      void _signOut() {
+    FirebaseAuthMethods(_auth).logOff(context: context);
+  }
     return Scaffold(
       bottomNavigationBar: const NavigationContainer(),
       body: Column(
@@ -45,7 +47,7 @@ class Profile extends StatelessWidget {
                     children: [
                       const SizedBox(width: 16.0),
                       FloatingActionButton.extended(
-                        onPressed: () {},
+                        onPressed: _signOut,
                         heroTag: 'mesage',
                         elevation: 0,
                         backgroundColor: Colors.red,
@@ -101,8 +103,7 @@ class _TopPortion extends StatelessWidget {
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                              'https://scontent.fdar7-1.fna.fbcdn.net/v/t39.30808-6/326005129_727266755379833_8240995869782050640_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEMS0fKTeYkH3h4qEffuAKXTVpUVOfVcVhNWlRU59VxWGAMTCiAauSDfSH5S9U5Ue_w5-mgGAqo7raVIT2yZXjM&_nc_ohc=AkISb_p7NBAAX-FfFbM&_nc_ht=scontent.fdar7-1.fna&oh=00_AfAccn0aQ_D4hPAtMibH5Oxip4D0P2BhH664g62ObpwETQ&oe=6467E3A3'
-                            )),
+                            'https://scontent.fdar7-1.fna.fbcdn.net/v/t39.30808-6/326005129_727266755379833_8240995869782050640_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEMS0fKTeYkH3h4qEffuAKXTVpUVOfVcVhNWlRU59VxWGAMTCiAauSDfSH5S9U5Ue_w5-mgGAqo7raVIT2yZXjM&_nc_ohc=AkISb_p7NBAAX-FfFbM&_nc_ht=scontent.fdar7-1.fna&oh=00_AfAccn0aQ_D4hPAtMibH5Oxip4D0P2BhH664g62ObpwETQ&oe=6467E3A3')),
                   ),
                 ),
                 Positioned(
