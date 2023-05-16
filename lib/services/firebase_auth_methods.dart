@@ -27,6 +27,7 @@ class FirebaseAuthMethods {
     try {
       _auth.currentUser!.sendEmailVerification();
       showSnackBar(context, 'Email Verification Sent');
+       context.go('/');
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }
