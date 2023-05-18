@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notes/provider/note_provide.dart';
@@ -11,7 +12,6 @@ class NotesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final noteProvider = Provider.of<NoteProvider>(context);
-    var notes = noteProvider.notes;
     final router = GoRouter.of(context);
 
     return Scaffold(
@@ -19,20 +19,24 @@ class NotesList extends StatelessWidget {
         title: const Text('Note Lists'),
       ),
       bottomNavigationBar: const NavigationContainer(),
-      body: notes.isEmpty
-          ? const Center(
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('notes').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
               child: Text(
                 'No notes found ',
                 style: TextStyle(
                   fontSize: 18,
                 ),
               ),
-            )
-          : ListView.builder(
-              itemCount: notes.length,
-              itemBuilder: (BuildContext context, int index) {
-                final note = notes[index];
-                return Padding(
+            );
+          }
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              final note = snapshot.data!.docs[index];
+               return Padding(
                   padding: const EdgeInsets.only(
                       top: 5, bottom: 5, left: 10, right: 10),
                   child: Card(
@@ -43,7 +47,7 @@ class NotesList extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: ListTile(
                         title: Text(
-                          note['topic'],
+                          note['title'],
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -59,15 +63,17 @@ class NotesList extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          router.goNamed('note',
-                              params: {'noteId': note['id'].toString()});
+                          // router.goNamed('note',
+                          //     params: {'noteId': note['id'].toString()});
                         },
                       ),
                     ),
                   ),
                 );
-              },
-            ),
+            },
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             noteProvider.updatePage(1);

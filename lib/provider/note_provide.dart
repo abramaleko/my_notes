@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import '../screens/note.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NoteProvider with ChangeNotifier {
   int currentIndex = 0; //stores the index of the home page
-  List<Map> notes = [];
+  CollectionReference notesList =
+      FirebaseFirestore.instance.collection('notes');
 
   //updates page depending on index
   void updatePage(int index) {
@@ -11,13 +12,7 @@ class NoteProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addNote(note) {
-    notes.add(note); //add note to the list
-    updatePage(0); //shows the note list page
-  }
-
-  void deleteNote(int id) {
-    notes.removeWhere((note) => note['id'] == id);
-    notifyListeners();
+  Future<void> addNewNote(data) {
+    return notesList.add({'title': data['topic'], 'content': data['content']});
   }
 }

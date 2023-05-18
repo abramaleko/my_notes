@@ -18,16 +18,15 @@ class MyNotes extends StatelessWidget {
 
     saveInfo() {
       if (formKey.currentState!.validate()) {
-        var id = Random().nextInt(100);
         var data = {
-          'id': id,
           'topic': topic.text,
           'content': content.text,
         };
 
         topic.clear();
         content.clear();
-        noteProvider.addNote(data); //add note to the list
+        noteProvider.addNewNote(data); 
+        //add note to the list
         context.go('/note-list');
       }
     }
