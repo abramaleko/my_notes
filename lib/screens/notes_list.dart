@@ -63,8 +63,8 @@ class NotesList extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          // router.goNamed('note',
-                          //     params: {'noteId': note['id'].toString()});
+                          router.goNamed('note',
+                              params: {'noteId':note.id});
                         },
                       ),
                     ),

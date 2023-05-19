@@ -12,6 +12,7 @@ class NoteProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
   Future<void> addNewNote(data) {
     return notesList.add({'title': data['topic'], 'content': data['content']});
   }
