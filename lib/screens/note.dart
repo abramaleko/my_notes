@@ -28,7 +28,7 @@ class Note extends StatelessWidget {
           return const Text('Document does not exist');
         }
         final note = snapshot.data!.data() as Map<String, dynamic>;
-
+        
         // Return your desired widget here using the note data
         return Scaffold(
           appBar: AppBar(
@@ -55,8 +55,10 @@ class Note extends StatelessWidget {
                           ),
                           IconButton(
                               onPressed: () {
-                                // noteProvider.deleteNote(note['id']);
-                                // context.go('/note-list');
+                                FirebaseFirestore.instance.collection('notes').doc(noteId).delete()
+                                .then((value) =>
+                                  context.go('/note-list')
+                                 );
                               },
                               icon: const Icon(
                                 Icons.delete,
