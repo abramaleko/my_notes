@@ -1,7 +1,12 @@
-# my_notes
+# My Notes
+ 
+ My first flutter app which basically create, stores and delete notes stored in the firestore.
 
-## To do list
+ Feautures
+ - Sign up and log in
+ - Email verification
+ - Create and delete notes
 
-- In my notes if no notes show to create a new note
-- View note
-- Save note
+As Aristotle once said 
+
+“For the things we have to learn before we can do them, we learn by doing them.”
